@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char binary[20];
+    char choice;
+    int i,count=0;
+    printf("Enter a binary");
+    scanf("%s",binary);
+    int dl=strlen(binary);
+    while(getchar() !='\n');
+    
+    printf("Enter Your Choice e or o \n");
+    scanf("%c",&choice);
+    for(i=0;i<dl;i++)
+    {
+        if(binary[i]=='1')
+        {
+            count++;
+        }
+    }
+    if(choice=='e')
+    {
+        if((count%2)==0)
+        {
+            printf("Even");
+        }
+        else
+        {
+            printf("Not Even");
+        }
+    }
+    else if(choice=='o')
+    {
+        if((count%2)!=0)
+        {
+            printf("Odd");
+        }
+        else
+        {
+            printf("Not Odd");
+        }
+    }
+    else
+    {
+        printf("Invalid Choice");
+        return 1;
+    }
+    return 0;
+}
