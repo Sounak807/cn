@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int divlen,len,m[30],d[10],rem[10],i,j,k,temp=0;
+    printf("Enter the length of divisor");
+    scanf("%d",&divlen);
+    printf("Enter the divisor");
+    for(i=0;i<divlen;i++)
+    {
+        scanf("%d",&d[i]);
+    }
+    printf("Enter the length of data");
+    scanf("%d",&len);
+    printf("Enter the DATA+CRC");
+    for(i=0;i<len;i++)
+    {
+        scanf("%d",&m[i]);
+    }
+    for(i=0;i<len;i++)
+    {
+        if(m[i]==1)
+        {
+            for(j=0;j<divlen;j++)
+            {
+                if(m[i+j]==d[j])
+                {
+                    rem[j]=0;
+                }
+                else
+                {
+                    rem[j]=1;
+                }
+            }
+            for(k=0;k<divlen;k++)
+            {
+                m[i+k]=rem[k];
+            }
+        }
+        else
+        {
+             for(k=0;k<divlen;k++)
+            {
+                rem[k]=m[i+k];
+            }
+        }
+    }
+    printf("crc ");
+    for(i=1;i<divlen;i++)
+    {
+        printf("%d",rem[i]);
+        temp+=rem[i];
+    }
+    if(temp==0)
+    {
+        printf("Success");
+    }
+    else
+    {
+        printf("Error");
+    }
+    return 0;
+}
