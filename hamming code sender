@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+// Function to calculate the number of parity bits required
+int calculateParityBits(int dataLength) {
+    int r = 0;
+    while (pow(2, r) < (dataLength + r + 1)) {
+        r++;  // Increment r until 2^r >= (dataLength + r + 1)
+    }
+    return r;  // Return the total number of parity bits
+}
+
+int main() {
+    char data[100];       // Input binary data as a string
+    int data1[100];       // Array to store binary input as integers
+    int data2[200];       // Array to store the final Hamming Code
+    int dataLength, r, i, j, k, z, c;
+
+    // Initialize the arrays
+    memset(data, '\0', sizeof(data));  // Clear the data array (set to '\0')
+    memset(data2, 0, sizeof(data2));   // Clear the data2 array (set to 0)
+
+    // Get input from the user
+    printf("Enter the binary data: ");
+    scanf("%s", data);  // Take binary data input as a string
+
+    // Calculate the length of input data
+    dataLength = strlen(data);  // Get the length of the input string
+
+    // Convert input data from char to int
+    for (i = 0; i < dataLength; i++) {
+        data1[i] = data[i] - '0';  // Convert character to integer
+    }
+
+    // Calculate the number of parity bits
+    r = calculateParityBits(dataLength);  // Call the function
+    printf("Number of parity bits (r): %d\n", r);
+
+    // Placeholders for parity bits at positions 1, 2, 4, ...
+    for (i = 0; i < r; i++) {
+        z = pow(2, i);         // Calculate the current parity bit position
+        data2[z] = -1;         // Mark parity bit positions with -1
+    }
+
+    // Fill in the data bits into the Hamming Code array
+    j = 0;  // Pointer for the original data array
+    for (i = 1; i <= dataLength + r; i++) {
+        if (data2[i] != -1) {  // Skip parity positions
+            data2[i] = data1[j];  // Place the next data bit
+            j++;  // Move to the next bit in data1
+        }
+    }
+
+    // Calculate parity bits
+    for (i = 0; i < r; i++) {
+        z = pow(2, i);  // Current parity position (1, 2, 4, 8, ...)
+        c = 0;          // Initialize the count for the current parity bit
+
+        // Calculate parity using XOR logic
+        for (j = z; j <= dataLength + r; j += 2 * z) {  // Start at position z, skip 2*z
+            for (k = 0; k < z; k++) {  // Check z bits in each group
+                if (j + k <= dataLength + r && data2[j + k] != -1) {
+                    c += data2[j + k];  // Add the bit value if it's not a parity bit
+                }
+            }
+        }
+
+        // Store the calculated parity bit (mod 2)
+        data2[z] = c % 2;  // Set the parity bit value (even/odd parity)
+    }
+
+    // Print the final Hamming Code
+    printf("The Hamming Code is: ");
+    for (i = dataLength + r; i >= 1; i--) {  // Print in reverse order
+        printf("%d", data2[i]);  // Output the final Hamming Code bit-by-bit
+    }
+    printf("\n");
+
+    return 0;
+}
