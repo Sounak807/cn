@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    int i,count=0;
+    char choice;
+    char binary[10];
+    printf("Please Enter the binary Number \n");
+    scanf("%s",binary);
+    int dl=strlen(binary);
+    while(getchar() !='\n');
+    
+    printf("Enter (E) to encode even or (O) to encode Odd \n");
+    scanf("%c",&choice);
+    for(i=0;i<dl;i++)
+    {
+        if(binary[i]=='1')
+        {
+            count++;
+        }
+    }
+    if(choice=='E')
+    {
+        if((count%2)==0)
+        {
+            printf("Its Already Even Bit Encoded 0 \n");
+        }
+        else
+        {
+            printf("Your Data has been modified here is your new data %s1",binary);
+        }
+    }
+    else if(choice=='O')
+    {
+        if((count%2)!=0)
+        {
+            printf("Its Already Odd Bit Encoded 0 \n");
+        }
+        else
+        {
+            printf("Your Data has been modified here is your new data %s1",binary);
+        }
+    }
+    else
+    {
+        printf("Enter valid Choice");
+        return 1;
+    }
+    return 0;
+}
