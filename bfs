@@ -1,0 +1,24 @@
+graph = {
+    'a': ['b', 'c'],
+    'b': ['d', 'e'],
+    'c': ['f'],
+    'd': [],
+    'e': ['f'],
+    'f': []
+}
+
+visited = []
+queue = []
+
+def bfs(graph,node):
+    queue.append(node)
+    visited.append(node)
+    while queue:
+        s = queue.pop(0)
+        print(s, end = " ")
+        for n in graph[s]:
+            if n not in visited:
+                queue.append(n)
+                visited.append(n)
+                
+bfs(graph,'a')
